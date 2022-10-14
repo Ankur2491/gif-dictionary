@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-7 col-sm-6 col-xs-6">
+            <mat-form-field class="full-width-field">
+                <mat-label>Search Query</mat-label>
+                <input matInput [(ngModel)]="searchQuery">
+            </mat-form-field>
+        </div>
+        <div class="col-3 col-sm-6 col-xs-6">
+            <button class="search-button" mat-raised-button color="primary" (click)="searchGif()">Search</button>
+        </div>
+    </div>
+    <div *ngIf="idArr.length>0" class="row">
+        <div *ngFor="let obj of idArr" class="col-md-3">
+            <div class="card" style="width: 18rem; margin-top: 10px;">
+                <img class="card-img-top" [src]="obj.url" alt="Card image cap">
+                <div class="card-body">
+                    <button class="search-button" mat-raised-button color="primary" [cdkCopyToClipboard]="obj.url" (click)="copyGif()">copy gif</button>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
