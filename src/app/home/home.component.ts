@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GifService } from '../gif.service';
-import { copyImageToClipboard } from 'copy-image-clipboard'
 
 @Component({
   selector: 'app-home',
