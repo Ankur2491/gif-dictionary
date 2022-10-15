@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GifService } from '../gif.service';
+import { copyImageToClipboard } from 'copy-image-clipboard'
 
 @Component({
   selector: 'app-home',
@@ -11,26 +12,41 @@ export class HomeComponent implements OnInit {
 
   searchQuery = "";
   idArr: Array<any> = [];
+  giphyData: any;
+  tenorData: any;
   constructor(private gifService: GifService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
-  prepareData(dataObj: any) {
+  prepareData() {
     this.idArr = [];
-    let dataArr = dataObj['data'];
+    let resArr = this.tenorData['results'];
+    for (let ele of resArr) {
+      let obj = { 'id': ele.id, 'url': '' }
+      if (ele['media_formats']['gif']) {
+        obj['url'] = ele['media_formats']['gif']['url'];
+      }
+      if (obj['url'] != '') {
+        this.idArr.push(obj);
+      }
+    }
+    let dataArr = this.giphyData['data'];
     for (let ele of dataArr) {
       let obj = { 'id': ele.id, 'url': `https://media.giphy.com/media/${ele.id}/giphy.gif` }
       this.idArr.push(obj);
     }
-    console.log(this.idArr);
   }
   searchGif() {
     this.gifService.searchGifs(this.searchQuery).subscribe(res => {
-      this.prepareData(res);
+      this.giphyData = res;
+      this.gifService.searchTenor(this.searchQuery).subscribe(tenorRes => {
+        this.tenorData = tenorRes;
+        this.prepareData();
+      });
     })
   }
-  openSnackBar(message: string) { 
-      this._snackBar.open(message,'Dismiss',{duration:2000});
+  openSnackBar(message: string) {
+    this._snackBar.open(message, 'Dismiss', { duration: 2000 });
   }
   copyGif() {
     this.openSnackBar("gif copied!!");
