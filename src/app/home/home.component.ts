@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GifService } from '../gif.service';
-
+const navigator = window.navigator as any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
   idArr: Array<any> = [];
   giphyData: any;
   tenorData: any;
-  constructor(private gifService: GifService, private _snackBar: MatSnackBar) { }
+  
+  constructor(private gifService: GifService, private _snackBar: MatSnackBar, private http: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -47,7 +49,16 @@ export class HomeComponent implements OnInit {
   openSnackBar(message: string) {
     this._snackBar.open(message, 'Dismiss', { duration: 2000 });
   }
-  copyGif() {
-    this.openSnackBar("gif copied!!");
+  async copyGif(url: string) {
+    this.http.get(url,{ responseType: 'blob' }).subscribe(async data=>{
+      const imgFile: File = new File([data], "img");
+      await navigator.share({
+        imgFile,
+        title: 'gif',
+        text: 'gif'
+      })
+    })
   }
+    // this.openSnackBar("gif copied!!");
+  
 }
