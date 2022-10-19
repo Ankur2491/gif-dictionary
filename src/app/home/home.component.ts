@@ -53,9 +53,7 @@ export class HomeComponent implements OnInit {
     this.http.get(url,{ responseType: 'blob' }).subscribe(async data=>{
       const imgFile: File = new File([data], "img");
       await navigator.share({
-        imgFile,
-        title: 'gif',
-        text: 'gif'
+        imgFile
       })
     })
   }
