@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     this._snackBar.open(message, 'Dismiss', { duration: 2000 });
   }
   async copyGif(id: string, url: string) {
-    let mainData: any = {files: [], text: id, url: url, title: id };
+    let mainData: any = {files: []};
     const options = { type: "image/gif" };
     this.http.get(url,{ responseType: 'arraybuffer' }).subscribe(async resp=>{
       const imgFile = new File([resp], `${id}.gif`, options);
