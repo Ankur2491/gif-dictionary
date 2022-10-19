@@ -52,6 +52,7 @@ export class HomeComponent implements OnInit {
   async copyGif(url: string) {
     this.http.get(url,{ responseType: 'blob' }).subscribe(async data=>{
       const imgFile: File = new File([data], "img");
+      alert(navigator.canShare({imgFile}));
       await navigator.share({
         imgFile
       })
