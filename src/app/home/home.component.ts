@@ -49,10 +49,11 @@ export class HomeComponent implements OnInit {
   openSnackBar(message: string) {
     this._snackBar.open(message, 'Dismiss', { duration: 2000 });
   }
-  async copyGif(url: string) {
-    this.http.get(url,{ responseType: 'blob' }).subscribe(async data=>{
-      const imgFile: File = new File([data], "img");
-      alert(navigator.canShare({imgFile}));
+  async copyGif(id: string, url: string) {
+    const options = { type: "image/gif" };
+    this.http.get(url,{ responseType: 'arraybuffer' }).subscribe(async data=>{
+      const imgFile: File = new File([data], `${id}.gif`, options);
+      alert(navigator.canShare(imgFile));
       await navigator.share({
         imgFile
       })
