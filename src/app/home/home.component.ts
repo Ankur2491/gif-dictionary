@@ -38,6 +38,7 @@ export class HomeComponent implements OnInit {
     }
   }
   searchGif() {
+    this.idArr = [];
     this.gifService.searchGifs(this.searchQuery).subscribe(res => {
       this.giphyData = res;
       this.gifService.searchTenor(this.searchQuery).subscribe(tenorRes => {
