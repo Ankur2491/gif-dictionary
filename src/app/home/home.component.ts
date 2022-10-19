@@ -53,10 +53,9 @@ export class HomeComponent implements OnInit {
     const options = { type: "image/gif" };
     this.http.get(url,{ responseType: 'arraybuffer' }).subscribe(async data=>{
       const imgFile: File = new File([data], `${id}.gif`, options);
-      alert(navigator.canShare(imgFile));
-      await navigator.share({
+      await navigator.share(
         imgFile
-      })
+      )
     })
   }
     // this.openSnackBar("gif copied!!");
