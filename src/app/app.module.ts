@@ -11,11 +11,15 @@ import {MatButtonModule} from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+// import { MemesComponent } from './memes/memes.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent
+    // MemesComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HttpClientModule,
     ClipboardModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

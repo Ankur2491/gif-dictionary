@@ -14,7 +14,8 @@ export class HomeComponent implements OnInit {
   idArr: Array<any> = [];
   giphyData: any;
   tenorData: any;
-  
+  shareId: string="";
+  loading = false;
   constructor(private gifService: GifService, private _snackBar: MatSnackBar, private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -51,6 +52,9 @@ export class HomeComponent implements OnInit {
     this._snackBar.open(message, 'Dismiss', { duration: 2000 });
   }
   async copyGif(id: string, url: string) {
+    this.shareId = id;
+    this.loading = true;
+    console.log(this.shareId, this.loading);
     let mainData: any = {files: []};
     const options = { type: "image/gif" };
     this.http.get(url,{ responseType: 'arraybuffer' }).subscribe(async resp=>{
@@ -59,6 +63,7 @@ export class HomeComponent implements OnInit {
       await navigator.share(
         mainData
       )
+      this.loading = false;
     })
   }
     // this.openSnackBar("gif copied!!");
